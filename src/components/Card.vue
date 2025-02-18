@@ -1,20 +1,28 @@
 <template>
-  <div class="bg-[#101420] shadow-2xl p-6 rounded-xl text-center relative">
-    <!-- 🔹 Titre en haut de la carte -->
-    <h3 class="text-xl font-semibold mb-4">{{ title }}</h3>
+  <div class="bg-dark-900 shadow-2xl p-6 rounded-xl text-center relative flex flex-col h-full justify-between">
+    <!-- Conteneur supérieur (titre, image) -->
+    <div>
+      <h3 class="text-xl text-white font-semibold mb-4">{{ title }}</h3>
 
-    <!-- Image cliquable avec ratio 4:3 -->
-    <img 
-      :src="image" 
-      :alt="title" 
-      class="w-full aspect-[4/3] object-cover rounded-lg cursor-pointer transition duration-300 ease-in-out hover:opacity-75"
-      @click="openModal"
-    >
+      <img 
+        :src="image" 
+        :alt="title" 
+        class="w-full aspect-[4/3] object-cover rounded-lg cursor-pointer transition duration-300 ease-in-out hover:opacity-75"
+        @click="openModal"
+      >
+    </div>
 
-    <!-- Description personnalisée avec slot -->
-    <p class="mt-2 text-xl text-white">
-      <slot name="description"></slot>
-    </p>
+    <!-- Conteneur intermédiaire (description) -->
+    <div class="flex-grow">
+      <p class="mt-2 text-xl text-white">
+        <slot name="description"></slot>
+      </p>
+    </div>
+
+    <!-- Bouton aligné en bas -->
+    <div class="mt-auto pt-4">
+      <slot name="button"></slot>
+    </div>
 
     <!-- Overlay (modal) avec fond flou -->
     <Transition name="fade">
@@ -24,17 +32,12 @@
         @click.self="closeModal"
       >
         <div class="relative">
-          <!-- Bouton de fermeture avec icône Material Symbols -->
-          <button 
-            @click="closeModal" 
-            class="absolute top-2 right-2 text-gray-400 hover:text-gray-200 transition duration-300"
-          >
-            <span class="material-symbols-outlined text-2xl">
-              close_fullscreen
-            </span>
-          </button>
+          <Button variant="danger" class="absolute mb-5 right-2" @click="closeModal">
+            <template #icon>
+              <span class="material-symbols-outlined text-2xl">close</span>
+            </template>
+          </Button>
 
-          <!-- Image en grand format -->
           <img :src="image" :alt="title" class="max-w-full max-h-[80vh] rounded-lg drop-shadow-lg">
         </div>
       </div>
@@ -43,7 +46,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref } from "vue";
+import Button from "../components/Button.vue";
 
 defineProps({
   image: String,
@@ -62,24 +66,14 @@ const closeModal = () => {
   document.removeEventListener("keydown", closeOnEscape);
 };
 
-/* ✅ Ajout du type `KeyboardEvent` */
 const closeOnEscape = (event: KeyboardEvent) => {
   if (event.key === "Escape") {
     closeModal();
   }
 };
-
-onMounted(() => {
-  document.addEventListener("keydown", closeOnEscape);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener("keydown", closeOnEscape);
-});
 </script>
 
 <style>
-/* Animation smooth pour l'apparition de l'overlay */
 .fade-enter-active {
   transition: opacity 0.7s ease-in-out;
 }
