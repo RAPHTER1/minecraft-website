@@ -3,10 +3,12 @@ frontend:
   phases:
     preBuild:
       commands:
+        - export NVM_DIR="$HOME/.nvm"
+        - [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        - nvm install 18  # Installe Node.js 18 (changer si besoin)
+        - nvm use 18  # Utilise Node.js 18
         - curl -fsSL https://get.pnpm.io/install.sh | sh  # Installe PNPM
         - export PATH="~/.local/share/pnpm:$PATH"  # Ajoute PNPM au PATH
-        - corepack enable  # Active Corepack (gestionnaire de paquets)
-        - corepack prepare pnpm@latest --activate  # Assure la dernière version de pnpm
         - pnpm install
     build:
       commands:
