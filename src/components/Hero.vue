@@ -26,7 +26,7 @@
 
         <!-- Bouton Minecraft avec copie au clic -->
         <Button variant="secondary" :clipboard="true">
-          minecraft.raphter.io
+          server.minecraft.raphter.io
         </Button>
 
       </div>
