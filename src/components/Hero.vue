@@ -4,7 +4,7 @@
 
       <ParticleEffect />
       
-      <img src="/images/banner2.png" alt="Bannière" class=" max-w-2xl h-auto mb-6" />
+      <img src="/images/banner2.png" alt="Bannière" class="max-w-2xl h-auto mb-6" />
 
       <!-- Titre animé -->
       <h1 class="text-4xl md:text-6xl font-bold tracking-wide animate-fade-in">
