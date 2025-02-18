@@ -3,8 +3,10 @@ frontend:
   phases:
     preBuild:
       commands:
-        - corepack enable
-        - corepack prepare pnpm@latest --activate
+        - curl -fsSL https://get.pnpm.io/install.sh | sh  # Installe PNPM
+        - export PATH="~/.local/share/pnpm:$PATH"  # Ajoute PNPM au PATH
+        - corepack enable  # Active Corepack (gestionnaire de paquets)
+        - corepack prepare pnpm@latest --activate  # Assure la dernière version de pnpm
         - pnpm install
     build:
       commands:
